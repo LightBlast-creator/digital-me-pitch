@@ -93,6 +93,12 @@
     .orbit { position: absolute; right: -2rem; bottom: 1rem; width: 23rem; height: 10rem; border: 2px solid rgba(255,255,255,.2); border-left-color: transparent; border-right-color: transparent; border-radius: 50%; transform: rotate(-12deg); }
 
     .light { background: var(--white); }
+    .video-section { background: var(--ink); color: var(--white); }
+    .video-section .section-intro p { color: #bfd1c8; }
+    .video-card { padding: 1rem; border: 1px solid rgba(200,247,214,.2); border-radius: var(--radius-lg); background: rgba(255,255,255,.06); box-shadow: var(--shadow); }
+    .video-card video { display: block; width: 100%; border-radius: 1rem; background: #0b1517; }
+    .video-caption { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1rem; color: #bfd1c8; font-size: .95rem; }
+    .video-caption a { color: var(--ink); background: var(--mint); padding: .65rem .9rem; border-radius: 999px; font-weight: 800; text-decoration: none; white-space: nowrap; }
     .mint-section { background: var(--mint-soft); }
     .dark-section { color: var(--white); background: var(--ink); }
     .section-intro { display: grid; grid-template-columns: .9fr 1.1fr; gap: 5rem; align-items: end; margin-bottom: 4rem; }
@@ -227,6 +233,7 @@
     <a class="brand" href="#top"><img src="assets/digital-me-logo.png" alt=""> DIGITAL ME</a>
     <nav class="nav-links">
       <a href="#idee">Idee</a>
+      <a href="#video">Video</a>
       <a href="#ux">UX</a>
       <a href="#technik">Technik</a>
       <a href="#nachweise">Nachweise</a>
@@ -242,6 +249,7 @@
           <h1>Eine App, die dich nicht nervt.</h1>
           <p class="hero-copy">Digital Me macht aus deinen Schritten eine persönliche Reise – mit Charakter, Story und einem nächsten Schritt, der zu deinem Alltag passt. Und wenn Daten fehlen, steht da nicht einfach 0.</p>
           <div class="hero-actions">
+            <a class="button button-primary" href="#video">Produktvideo ansehen</a>
             <a class="button button-primary" href="#idee">So funktioniert's</a>
             <a class="button button-secondary" href="#nachweise">Was schon läuft</a>
           </div>
@@ -255,6 +263,19 @@
           <div class="camp"><img src="assets/digital-me-logo.png" alt="Digital Me Lagerfeuer-Illustration"></div>
           <div class="metric"><small>Beispielansicht</small><strong>2.300</strong><span>Schritte heute</span></div>
           <div class="orbit"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="video-section" id="video">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">Pitch-Deck-Produktvideo</p><h2>Digital Me in 40 Sekunden.</h2></div>
+          <p>Echte Screens aus dem Pixel-9a-MVP, mit Musik und zurückhaltendem UI-Sounddesign. Die vertonte Fassung kann direkt hier abgespielt oder heruntergeladen werden.</p>
+        </div>
+        <div class="video-card">
+          <video controls preload="metadata" poster="assets/digital-me-video-poster.png" src="assets/digital-me-product-video.webm" aria-label="Digital Me Produktvideo mit Sounddesign"></video>
+          <div class="video-caption"><span>40 Sekunden · VP9-Video · Opus-Audio</span><a href="assets/digital-me-product-video.webm" download>Video herunterladen</a></div>
         </div>
       </div>
     </section>
