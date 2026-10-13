@@ -174,12 +174,21 @@
     .final-box::after { content: ""; position: absolute; right: -5rem; bottom: -8rem; width: 22rem; height: 22rem; border-radius: 50%; background: var(--orange); opacity: .86; }
     .final-box > * { position: relative; z-index: 1; }
     .final-box p { max-width: 42rem; color: #bfd1c8; font-size: 1.2rem; }
-    .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.4rem; }
-    .next { padding: 1.3rem; color: var(--ink); border-radius: 1rem; background: var(--mint); }
-    .next:nth-child(2) { background: var(--yellow); }
-    .next:nth-child(3) { background: var(--white); }
-    .next strong { display: block; margin-bottom: .5rem; font-size: 1.1rem; }
-    .next span { display: block; font-size: .95rem; }
+    .roadmap-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: .8rem; margin-top: 2.4rem; }
+    .roadmap-card { display: flex; flex-direction: column; min-height: 24rem; padding: 1.25rem; color: var(--ink); border-radius: 1rem; background: var(--mint); }
+    .roadmap-card:nth-child(2) { background: #dff4ff; }
+    .roadmap-card:nth-child(3) { background: var(--yellow); }
+    .roadmap-card:nth-child(4) { background: var(--orange); color: var(--white); }
+    .roadmap-card:nth-child(5) { background: var(--white); }
+    .roadmap-card.current { color: var(--white); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.24); }
+    .roadmap-index { display: block; color: var(--coral); font-size: 2rem; font-weight: 900; line-height: 1; letter-spacing: -.06em; }
+    .roadmap-card.current .roadmap-index, .roadmap-card:nth-child(4) .roadmap-index { color: var(--mint); }
+    .roadmap-phase { display: block; margin-top: 2rem; font-size: .72rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .roadmap-card h3 { margin-top: .7rem; }
+    .roadmap-card p { margin-bottom: 1rem; color: var(--ink-soft); font-size: .96rem; }
+    .roadmap-card.current p, .roadmap-card:nth-child(4) p { color: #e3f0e9; }
+    .roadmap-status { display: inline-flex; align-items: center; width: fit-content; margin-top: auto; padding: .45rem .65rem; border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.72); font-size: .74rem; font-weight: 900; }
+    .roadmap-card.current .roadmap-status { color: var(--ink); background: var(--mint); }
 
     footer { padding: 2rem 0 3rem; color: var(--muted); background: var(--cream); font-size: .85rem; }
     footer .wrap { display: flex; justify-content: space-between; gap: 1rem; }
@@ -196,7 +205,7 @@
       .hero-visual { min-height: 25rem; }
       .camp { right: 1rem; width: min(18rem, 65vw); }
       .metric { left: 0; bottom: 1rem; }
-      .loop, .experience-grid, .architecture, .next-grid { grid-template-columns: 1fr 1fr; }
+      .loop, .experience-grid, .architecture, .roadmap-grid { grid-template-columns: 1fr 1fr; }
       .loop-item:nth-child(n) { transform: none; }
       .loop-note { margin-top: 2rem; }
       .proof-number { font-size: 7rem; }
@@ -206,7 +215,7 @@
       .nav-cta { display: none; }
       h1 { font-size: 3.5rem; }
       h2 { font-size: 2.7rem; }
-      .loop, .experience-grid, .architecture, .next-grid { grid-template-columns: 1fr; }
+      .loop, .experience-grid, .architecture, .roadmap-grid { grid-template-columns: 1fr; }
       .state-detail { padding: 1.6rem; }
       .proof-row { grid-template-columns: 1fr; gap: .25rem; }
       footer .wrap { flex-direction: column; }
@@ -222,7 +231,7 @@
       <a href="#technik">Technik</a>
       <a href="#nachweise">Nachweise</a>
     </nav>
-    <a class="nav-cta" href="#naechste-schritte">Wie es weitergeht</a>
+    <a class="nav-cta" href="#roadmap">Roadmap</a>
   </header>
 
   <main id="top">
@@ -376,16 +385,18 @@
       </div>
     </section>
 
-    <section class="final" id="naechste-schritte">
+    <section class="final" id="roadmap">
       <div class="wrap reveal">
         <div class="final-box">
-          <p class="kicker">Wie es weitergeht</p>
-          <h2>Das Fundament steht. Jetzt wird es sichtbar.</h2>
-          <p>Digital Me wird nicht größer geredet, als es ist. Die Basis ist gebaut. Jetzt geht es um den letzten Feinschliff, echtes Feedback und einen sauberen Release.</p>
-          <div class="next-grid">
-            <div class="next"><strong>Produkt</strong><span>Weiter polieren und schauen, wie echte Nutzer damit klarkommen.</span></div>
-            <div class="next"><strong>Veröffentlichung</strong><span>Relay produktiv machen, sicher signieren und sauber abnehmen.</span></div>
-            <div class="next"><strong>Portfolio</strong><span>Zeigen, wie aus einer Idee Schritt für Schritt ein echtes Produkt wird.</span></div>
+          <p class="kicker">Roadmap</p>
+          <h2>Vom MVP zur echten Reise.</h2>
+          <p>Erst beweisen, dass Digital Me im echten Alltag trägt. Dann sauber veröffentlichen. Erst danach wachsen — mit Inhalten, die einen echten Grund geben, wiederzukommen.</p>
+          <div class="roadmap-grid" aria-label="Digital-Me-Roadmap">
+            <article class="roadmap-card current"><span class="roadmap-index">01</span><span class="roadmap-phase">Jetzt</span><h3>Fundament steht.</h3><p>Onboarding, Health Connect, persönliche Ziele, Charakter, Story und Tagesmissionen sind als MVP gebaut und geprüft.</p><span class="roadmap-status">Nachgewiesen · MVP</span></article>
+            <article class="roadmap-card"><span class="roadmap-index">02</span><span class="roadmap-phase">Als Nächstes</span><h3>Im Alltag testen.</h3><p>Erste Testnutzer durch die erste Woche begleiten und herausfinden, wo die Reise verständlich ist — und wo sie noch hakt.</p><span class="roadmap-status">Geplant · Testgruppe</span></article>
+            <article class="roadmap-card"><span class="roadmap-index">03</span><span class="roadmap-phase">Danach</span><h3>Sauber veröffentlichen.</h3><p>Produktiven Relay fertigstellen, Release signieren, Store-Auftritt vorbereiten und die wichtigsten Abläufe noch einmal abnehmen.</p><span class="roadmap-status">Geplant · Release</span></article>
+            <article class="roadmap-card"><span class="roadmap-index">04</span><span class="roadmap-phase">Mit echten Signalen</span><h3>Die Reise ausbauen.</h3><p>Neue Story-Kapitel, Charakterstile, Missionen und Rückblicke erst dann ergänzen, wenn der Kern wirklich trägt.</p><span class="roadmap-status">Geplant · Inhalte</span></article>
+            <article class="roadmap-card"><span class="roadmap-index">05</span><span class="roadmap-phase">Später</span><h3>Modell prüfen.</h3><p>Optional testen, welche zusätzlichen Story- und Kosmetik-Inhalte echten Wert liefern — ohne den kostenlosen Kern kleinzumachen.</p><span class="roadmap-status">Hypothese · Validierung</span></article>
           </div>
         </div>
       </div>
