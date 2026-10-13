@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Digital Me – mein Android-Projekt für eine persönlichere und weniger stressige Bewegungsreise.">
+  <title>Digital Me – mein Android-Projekt</title>
+  <style>
+    :root {
+      --ink: #102326;
+      --ink-soft: #2b4143;
+      --muted: #6e7d7e;
+      --mint: #c8f7d6;
+      --mint-soft: #eafbf0;
+      --orange: #ff6b35;
+      --coral: #f4513a;
+      --yellow: #ffd166;
+      --cream: #fff8ee;
+      --white: #ffffff;
+      --line: #dce9e2;
+      --shadow: 0 24px 70px rgba(16, 35, 38, .12);
+      --radius-lg: 2rem;
+      --radius-md: 1.25rem;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    .wrap { width: min(var(--max), calc(100% - 3rem)); margin: 0 auto; }
+
+    .nav {
+      position: fixed;
+      z-index: 20;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(var(--max), calc(100% - 2rem));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .7rem .9rem .7rem 1rem;
+      color: var(--white);
+      background: rgba(16, 35, 38, .82);
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 999px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 12px 35px rgba(16, 35, 38, .18);
+    }
+    .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; font-weight: 800; letter-spacing: .08em; font-size: .78rem; }
+    .brand img { width: 2rem; height: 2rem; border-radius: 50%; }
+    .nav-links { display: flex; gap: .2rem; }
+    .nav-links a { padding: .5rem .75rem; color: rgba(255,255,255,.76); text-decoration: none; font-size: .82rem; border-radius: 999px; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); background: var(--mint); outline: none; }
+    .nav-cta { color: var(--ink); background: var(--mint); padding: .55rem .9rem; border-radius: 999px; text-decoration: none; font-size: .82rem; font-weight: 800; }
+
+    section { position: relative; padding: 8rem 0; overflow: hidden; }
+    .hero { min-height: 100svh; display: grid; align-items: center; color: var(--white); background: var(--ink); }
+    .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; filter: blur(1px); opacity: .9; pointer-events: none; }
+    .hero::before { width: 35rem; height: 35rem; right: -7rem; top: 8rem; background: radial-gradient(circle, rgba(200,247,214,.78), rgba(200,247,214,0) 68%); }
+    .hero::after { width: 28rem; height: 28rem; left: -12rem; bottom: -10rem; background: radial-gradient(circle, rgba(255,107,53,.35), rgba(255,107,53,0) 68%); }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 5rem; align-items: center; }
+    .eyebrow { margin: 0 0 1.2rem; color: var(--mint); font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 740px; margin-bottom: 1.4rem; font-size: clamp(3.3rem, 8vw, 7.2rem); line-height: .92; letter-spacing: -.075em; }
+    h2 { margin-bottom: 1rem; font-size: clamp(2.3rem, 5vw, 4.4rem); line-height: .98; letter-spacing: -.06em; }
+    h3 { margin-bottom: .7rem; font-size: 1.4rem; line-height: 1.1; letter-spacing: -.02em; }
+    .hero-copy { max-width: 610px; color: #bfd1c8; font-size: clamp(1.05rem, 1.8vw, 1.35rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .8rem 1.1rem; border-radius: 999px; border: 1px solid transparent; font-weight: 800; text-decoration: none; cursor: pointer; }
+    .button-primary { color: var(--ink); background: var(--mint); }
+    .button-secondary { color: var(--white); background: transparent; border-color: rgba(255,255,255,.25); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 2.5rem; }
+    .tag { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .7rem; border-radius: 999px; color: #d9e7df; background: rgba(255,255,255,.08); font-size: .78rem; }
+    .tag::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: var(--orange); }
+
+    .hero-visual { position: relative; min-height: 33rem; }
+    .camp { position: absolute; z-index: 2; right: 3rem; top: 2rem; width: min(22rem, 65vw); aspect-ratio: 1; padding: 2.5rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 1rem rgba(200,247,214,.08), var(--shadow); transform: rotate(3deg); }
+    .camp img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+    .metric { position: absolute; z-index: 3; left: 1rem; bottom: 4rem; width: 14rem; padding: 1.2rem; color: var(--ink); background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow); transform: rotate(-5deg); }
+    .metric small { display: block; color: var(--muted); font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+    .metric strong { display: block; margin: .3rem 0; font-size: 3.4rem; line-height: 1; letter-spacing: -.08em; }
+    .metric span { color: var(--teal, #2b6f70); font-weight: 800; }
+    .orbit { position: absolute; right: -2rem; bottom: 1rem; width: 23rem; height: 10rem; border: 2px solid rgba(255,255,255,.2); border-left-color: transparent; border-right-color: transparent; border-radius: 50%; transform: rotate(-12deg); }
+
+    .light { background: var(--white); }
+    .mint-section { background: var(--mint-soft); }
+    .dark-section { color: var(--white); background: var(--ink); }
+    .section-intro { display: grid; grid-template-columns: .9fr 1.1fr; gap: 5rem; align-items: end; margin-bottom: 4rem; }
+    .section-intro p { max-width: 600px; margin-bottom: .3rem; color: var(--muted); font-size: 1.15rem; }
+    .dark-section .section-intro p { color: #bfd1c8; }
+    .kicker { margin-bottom: .9rem; color: var(--orange); font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .statement { padding: 2.2rem; color: var(--white); background: var(--ink); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .statement p { margin: 0; font-size: clamp(2rem, 4vw, 3.6rem); font-weight: 800; line-height: 1.02; letter-spacing: -.06em; }
+    .frictions { display: grid; gap: .9rem; }
+    .friction { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; align-items: start; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+    .friction:last-child { border-bottom: 0; }
+    .friction-number { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border-radius: 50%; color: var(--ink); background: var(--yellow); font-weight: 900; }
+    .friction p { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
+
+    .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .loop-item { position: relative; min-height: 13rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
+    .loop-item:nth-child(2) { transform: translateY(1.2rem); background: var(--yellow); }
+    .loop-item:nth-child(3) { transform: translateY(2.4rem); background: var(--orange); }
+    .loop-item:nth-child(4) { transform: translateY(3.6rem); background: var(--mint); }
+    .loop-number { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; margin-bottom: 2.2rem; border-radius: 50%; color: var(--white); background: var(--ink); font-weight: 900; }
+    .loop-item p { margin: 0; color: var(--ink-soft); }
+    .loop-note { margin-top: 6rem; color: var(--teal, #2b6f70); font-size: 1.2rem; font-weight: 800; }
+
+    .experience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .experience-card { min-height: 19rem; padding: 1.6rem; border-radius: var(--radius-lg); background: var(--white); border: 1px solid rgba(16,35,38,.08); }
+    .experience-card .bar { width: 100%; height: .45rem; margin: -.1rem 0 2.2rem; border-radius: 999px; background: var(--orange); }
+    .experience-card:nth-child(2) .bar { background: #2b6f70; }
+    .experience-card:nth-child(3) .bar { background: var(--yellow); }
+    .experience-card p { color: var(--ink-soft); font-size: 1.05rem; }
+    .mini-label { display: inline-block; margin-top: 1.2rem; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+
+    .states-layout { display: grid; grid-template-columns: .95fr 1.05fr; gap: 4rem; align-items: start; }
+    .state-list { display: grid; gap: .75rem; }
+    .state-button { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; width: 100%; padding: 1rem; text-align: left; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 1rem; cursor: pointer; }
+    .state-button:hover, .state-button:focus-visible, .state-button.active { border-color: var(--orange); outline: none; box-shadow: 0 0 0 3px rgba(255,107,53,.15); }
+    .state-index { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--mint); font-weight: 900; }
+    .state-button strong { display: block; font-size: 1.1rem; }
+    .state-button span { display: block; margin-top: .2rem; color: var(--muted); font-size: .9rem; }
+    .state-detail { min-height: 24rem; padding: 2.5rem; color: var(--white); background: var(--ink); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .state-detail .state-status { color: var(--mint); font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    .state-detail h3 { margin-top: 1.2rem; font-size: 2.4rem; letter-spacing: -.05em; }
+    .state-detail p { max-width: 34rem; color: #bfd1c8; font-size: 1.15rem; }
+    .state-rule { display: inline-flex; margin-top: 1.5rem; padding: .6rem .8rem; border-radius: 999px; color: var(--ink); background: var(--mint); font-weight: 800; font-size: .9rem; }
+
+    .local-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .principles { display: grid; gap: 1rem; }
+    .principle { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    .principle:last-child { border-bottom: 0; }
+    .check { flex: 0 0 auto; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; color: var(--ink); background: var(--mint); font-weight: 900; }
+    .principle p { margin: 0; color: var(--ink-soft); }
+    .device { position: relative; display: grid; place-items: center; min-height: 26rem; border-radius: var(--radius-lg); background: var(--ink); overflow: hidden; }
+    .device::before { content: ""; position: absolute; width: 22rem; height: 22rem; border: 1px solid rgba(200,247,214,.3); border-radius: 50%; }
+    .device::after { content: ""; position: absolute; width: 14rem; height: 14rem; border: 1px solid rgba(200,247,214,.55); border-radius: 50%; }
+    .device-core { position: relative; z-index: 1; display: grid; place-items: center; width: 9rem; height: 9rem; padding: 1rem; border-radius: 50%; color: var(--ink); background: var(--mint); text-align: center; font-weight: 900; }
+    .device-label { position: absolute; z-index: 2; padding: .5rem .75rem; border-radius: 999px; color: var(--ink); background: var(--yellow); font-size: .8rem; font-weight: 800; }
+    .device-label.one { top: 3rem; left: 2rem; }
+    .device-label.two { right: 2rem; bottom: 3rem; background: var(--orange); color: var(--white); }
+
+    .architecture { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .arch-node { position: relative; padding: 1.5rem; min-height: 9rem; border: 1px solid rgba(200,247,214,.28); border-radius: var(--radius-md); background: rgba(255,255,255,.06); }
+    .arch-node:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -1.05rem; width: 1.1rem; height: 2px; background: var(--orange); }
+    .arch-node strong { display: block; margin-bottom: .8rem; color: var(--mint); font-size: 1.1rem; }
+    .arch-node span { color: #bfd1c8; }
+    .arch-note { margin-top: 2rem; color: #bfd1c8; font-size: 1.05rem; }
+
+    .proof { display: grid; grid-template-columns: .75fr 1.25fr; gap: 4rem; align-items: start; }
+    .proof-number { color: var(--orange); font-size: clamp(5rem, 12vw, 10rem); line-height: .8; letter-spacing: -.1em; }
+    .proof-caption { max-width: 19rem; margin-top: 1.2rem; color: var(--muted); font-size: 1.1rem; }
+    .proof-list { display: grid; gap: 0; }
+    .proof-row { display: grid; grid-template-columns: 11rem 1fr; gap: 2rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+    .proof-row strong { font-size: 1.1rem; }
+    .proof-row span { color: var(--ink-soft); }
+    .open-point { margin-top: 1.5rem; padding: 1rem 1.2rem; color: var(--coral); background: #fff0eb; border-radius: 1rem; font-weight: 800; }
+
+    .final { padding-bottom: 5rem; }
+    .final-box { position: relative; padding: clamp(2rem, 6vw, 5rem); color: var(--white); background: var(--ink); border-radius: var(--radius-lg); overflow: hidden; }
+    .final-box::after { content: ""; position: absolute; right: -5rem; bottom: -8rem; width: 22rem; height: 22rem; border-radius: 50%; background: var(--orange); opacity: .86; }
+    .final-box > * { position: relative; z-index: 1; }
+    .final-box p { max-width: 42rem; color: #bfd1c8; font-size: 1.2rem; }
+    .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.4rem; }
+    .next { padding: 1.3rem; color: var(--ink); border-radius: 1rem; background: var(--mint); }
+    .next:nth-child(2) { background: var(--yellow); }
+    .next:nth-child(3) { background: var(--white); }
+    .next strong { display: block; margin-bottom: .5rem; font-size: 1.1rem; }
+    .next span { display: block; font-size: .95rem; }
+
+    footer { padding: 2rem 0 3rem; color: var(--muted); background: var(--cream); font-size: .85rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 1rem; }
+
+    .reveal { opacity: 0; transform: translateY(1rem); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } }
+    @media (max-width: 850px) {
+      .wrap { width: min(var(--max), calc(100% - 2rem)); }
+      section { padding: 6rem 0; }
+      .nav-links { display: none; }
+      .hero-grid, .section-intro, .problem-grid, .states-layout, .local-grid, .proof { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding-top: 7rem; }
+      .hero-visual { min-height: 25rem; }
+      .camp { right: 1rem; width: min(18rem, 65vw); }
+      .metric { left: 0; bottom: 1rem; }
+      .loop, .experience-grid, .architecture, .next-grid { grid-template-columns: 1fr 1fr; }
+      .loop-item:nth-child(n) { transform: none; }
+      .loop-note { margin-top: 2rem; }
+      .proof-number { font-size: 7rem; }
+    }
+    @media (max-width: 560px) {
+      .nav { top: .6rem; }
+      .nav-cta { display: none; }
+      h1 { font-size: 3.5rem; }
+      h2 { font-size: 2.7rem; }
+      .loop, .experience-grid, .architecture, .next-grid { grid-template-columns: 1fr; }
+      .state-detail { padding: 1.6rem; }
+      .proof-row { grid-template-columns: 1fr; gap: .25rem; }
+      footer .wrap { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" aria-label="Hauptnavigation">
+    <a class="brand" href="#top"><img src="assets/digital-me-logo.png" alt=""> DIGITAL ME</a>
+    <nav class="nav-links">
+      <a href="#idee">Idee</a>
+      <a href="#ux">UX</a>
+      <a href="#technik">Technik</a>
+      <a href="#nachweise">Nachweise</a>
+    </nav>
+    <a class="nav-cta" href="#naechste-schritte">Wie es weitergeht</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Mein Android-Projekt · aktueller MVP</p>
+          <h1>Ich baue eine App, die dich nicht nervt.</h1>
+          <p class="hero-copy">Digital Me macht aus deinen Schritten eine persönliche Reise – mit Charakter, Story und einem nächsten Schritt, der zu deinem Alltag passt. Und wenn Daten fehlen, steht da nicht einfach 0.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#idee">So funktioniert's</a>
+            <a class="button button-secondary" href="#nachweise">Was schon läuft</a>
+          </div>
+          <div class="hero-meta">
+            <span class="tag">Android</span>
+            <span class="tag">Bleibt lokal</span>
+            <span class="tag">Health Connect</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Beispielhafte Digital-Me-Ansicht">
+          <div class="camp"><img src="assets/digital-me-logo.png" alt="Digital Me Lagerfeuer-Illustration"></div>
+          <div class="metric"><small>Beispielansicht</small><strong>2.300</strong><span>Schritte heute</span></div>
+          <div class="orbit"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="light" id="problem">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">Warum ich das baue</p><h2>Das Problem</h2></div>
+          <p>Viele Schritt-Apps zeigen dir eine Zahl. Aber was machst du damit? Ich wollte etwas bauen, das erst einmal versteht, wie dein normaler Alltag aussieht, bevor es dir irgendein Ziel vor die Nase setzt.</p>
+        </div>
+        <div class="problem-grid">
+          <div class="statement"><p>Nicht jeden Tag perfekt. Aber den eigenen Weg im Blick.</p></div>
+          <div class="frictions">
+            <div class="friction"><span class="friction-number">01</span><p><strong>3.500 als Ziel</strong><br>obwohl 2.300 gerade realistischer sind.</p></div>
+            <div class="friction"><span class="friction-number">02</span><p><strong>Keine Daten</strong><br>und plötzlich steht da einfach 0.</p></div>
+            <div class="friction"><span class="friction-number">03</span><p><strong>Ein ruhiger Tag</strong><br>fühlt sich wie Rückschritt an.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mint-section" id="idee">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">Die Idee dahinter</p><h2>Die Produktidee</h2></div>
+          <p>Schritte sind bei Digital Me der Startpunkt, nicht die ganze Geschichte. Aus deinem Alltag entsteht nach und nach eine Reise, die sich nach dir richtet.</p>
+        </div>
+        <div class="loop" aria-label="Produkt-Loop">
+          <article class="loop-item"><span class="loop-number">1</span><h3>Erst beobachten</h3><p>Schauen, wie dein normaler Alltag wirklich aussieht.</p></article>
+          <article class="loop-item"><span class="loop-number">2</span><h3>Dann einordnen</h3><p>Ein Ziel finden, das nicht komplett an dir vorbeigeht.</p></article>
+          <article class="loop-item"><span class="loop-number">3</span><h3>Im Alltag bewegen</h3><p>Auch kleine Schritte zählen für deinen Weg.</p></article>
+          <article class="loop-item"><span class="loop-number">4</span><h3>Weiter aufbauen</h3><p>Story, Charakter und Ausrüstung entwickeln.</p></article>
+        </div>
+        <p class="loop-note">Du gibst das Tempo vor. Nicht irgendein Standardwert.</p>
+      </div>
+    </section>
+
+    <section class="light" id="erlebnis">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">So sieht es aus</p><h2>Das Erlebnis</h2></div>
+          <p>Einfacher Einstieg, sichtbare Entwicklung und genug Ruhe für die Tage, an denen eben weniger passiert.</p>
+        </div>
+        <div class="experience-grid">
+          <article class="experience-card"><div class="bar"></div><h3>Schritte heute</h3><p>Du siehst, was heute angekommen ist. Ein Ziel taucht erst auf, wenn die Beobachtung wirklich abgeschlossen ist.</p><span class="mini-label">Dashboard</span></article>
+          <article class="experience-card"><div class="bar"></div><h3>Deine Reise</h3><p>Kapitel, Richtungen und Wegmarken geben den Schritten mehr Bedeutung als nur eine Zahl.</p><span class="mini-label">Story</span></article>
+          <article class="experience-card"><div class="bar"></div><h3>Dein Charakter</h3><p>Du siehst, dass sich etwas entwickelt: Aussehen, Ausrüstung und neue kleine Belohnungen.</p><span class="mini-label">Entwicklung</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mint-section" id="ux">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">Was passiert, wenn etwas fehlt?</p><h2>Dann soll die App das auch sagen.</h2></div>
+          <p>Keine versteckte Notlösung. Kein erfundener Wert. Erst erklären, was los ist, und dann zeigen, was du tun kannst.</p>
+        </div>
+        <div class="states-layout">
+          <div class="state-list" role="tablist" aria-label="Datenzustände">
+            <button class="state-button active" role="tab" aria-selected="true" data-state="connect"><span class="state-index">01</span><span><strong>Erst verbinden</strong><span>Health Connect fehlt noch.</span></span></button>
+            <button class="state-button" role="tab" aria-selected="false" data-state="sync"><span class="state-index">02</span><span><strong>Wird gerade gelesen</strong><span>Ein neuer Abgleich läuft.</span></span></button>
+            <button class="state-button" role="tab" aria-selected="false" data-state="empty"><span class="state-index">03</span><span><strong>Noch keine Daten</strong><span>Keine Daten heißt nicht automatisch 0.</span></span></button>
+            <button class="state-button" role="tab" aria-selected="false" data-state="stale"><span class="state-index">04</span><span><strong>Letzten Stand zeigen</strong><span>Das, was sicher bekannt ist, bleibt sichtbar.</span></span></button>
+          </div>
+          <div class="state-detail" id="state-detail" role="tabpanel" aria-live="polite">
+            <span class="state-status">Aktueller Zustand</span>
+            <h3>Health Connect verbinden</h3>
+            <p>Wenn die Voraussetzung fehlt, zeigt die App das offen. Sie erklärt, was fehlt, und bringt dich direkt zur passenden Aktion.</p>
+            <span class="state-rule">erst verstehen · dann handeln</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="light" id="local-first">
+      <div class="wrap reveal local-grid">
+        <div>
+          <p class="kicker">Was bei dir bleibt</p>
+          <h2>Dein Zeug bleibt auf deinem Gerät.</h2>
+          <p style="color:var(--muted);font-size:1.15rem">Ich wollte keine App bauen, die direkt ein Konto und eine Cloud-Verbindung verlangt. Die Kernreise funktioniert erst einmal lokal.</p>
+          <div class="principles">
+            <div class="principle"><span class="check">✓</span><p>Schritte kommen aus Health Connect.</p></div>
+            <div class="principle"><span class="check">✓</span><p>Check-ins und Fortschritt bleiben erst einmal bei dir.</p></div>
+            <div class="principle"><span class="check">✓</span><p>Wenn Feedback nicht rausgeht, bleibt der Entwurf gespeichert.</p></div>
+            <div class="principle"><span class="check">✓</span><p>Du kannst deine lokalen Digital-Me-Daten komplett löschen.</p></div>
+          </div>
+        </div>
+        <div class="device" aria-label="Lokale Datenhaltung als visuelle Darstellung">
+          <span class="device-label one">Digital Me</span>
+          <span class="device-label two">Health Connect</span>
+          <div class="device-core">DEIN<br>GERÄT</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section" id="technik">
+      <div class="wrap reveal">
+        <div class="section-intro">
+          <div><p class="kicker">Unter der Haube</p><h2>Bewusst überschaubar.</h2></div>
+          <p>Nicht möglichst viel Technik, sondern nur das, was für die Reise gebraucht wird – sauber getrennt und testbar.</p>
+        </div>
+        <div class="architecture">
+          <div class="arch-node"><strong>Compose UI</strong><span>Klare Zustände und Aktionen</span></div>
+          <div class="arch-node"><strong>AppViewModel</strong><span>Ein sichtbarer StateFlow</span></div>
+          <div class="arch-node"><strong>Local Store</strong><span>SQLite und DataStore</span></div>
+          <div class="arch-node"><strong>Health Connect</strong><span>Nur Lesen für Schritte</span></div>
+        </div>
+        <p class="arch-note">Sobald die App sichtbar wird, schaut sie einmal nach. Danach höchstens alle fünf Minuten. Der Kompass läuft nur auf der Reise-Seite. Feedback bleibt ein eigener, optionaler Weg.</p>
+      </div>
+    </section>
+
+    <section class="light" id="nachweise">
+      <div class="wrap reveal proof">
+        <div>
+          <p class="kicker">Was schon wirklich läuft</p>
+          <div class="proof-number">MVP</div>
+          <p class="proof-caption">Das hier ist kein bloßes Mockup. Die wichtigen Abläufe sind im Code und wurden auf dem Pixel 9a geprüft.</p>
+        </div>
+        <div>
+          <div class="proof-list">
+            <div class="proof-row"><strong>Start</strong><span>Onboarding, Health Connect, Charakter und persönliches Startziel</span></div>
+            <div class="proof-row"><strong>Im Alltag</strong><span>Charakterentwicklung, Check-in, Garderobe und Tagesmission</span></div>
+            <div class="proof-row"><strong>Geprüft</strong><span>Lokale Unit-Tests und Instrumentation-Tests auf dem Pixel 9a</span></div>
+            <div class="proof-row"><strong>Gebaut</strong><span>Getrennter Debug-/QA-Workflow und offline erzeugter Release-Code</span></div>
+          </div>
+          <div class="open-point">Noch offen: produktiver Relay-Betrieb und sichere Produktionssignierung. Der Release folgt, sobald beides sauber abgeschlossen ist.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" id="naechste-schritte">
+      <div class="wrap reveal">
+        <div class="final-box">
+          <p class="kicker">Wie es weitergeht</p>
+          <h2>Das Fundament steht. Jetzt wird es sichtbar.</h2>
+          <p>Ich will Digital Me nicht größer reden, als es ist. Die Basis ist gebaut. Jetzt geht es um den letzten Feinschliff, echtes Feedback und einen sauberen Release.</p>
+          <div class="next-grid">
+            <div class="next"><strong>Produkt</strong><span>Weiter polieren und schauen, wie echte Nutzer damit klarkommen.</span></div>
+            <div class="next"><strong>Veröffentlichung</strong><span>Relay produktiv machen, sicher signieren und sauber abnehmen.</span></div>
+            <div class="next"><strong>Portfolio</strong><span>Zeigen, wie aus einer Idee Schritt für Schritt ein echtes Produkt wird.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>Digital Me · mein Android-Projekt</span><span>Stand: Oktober 2026</span></div></footer>
+
+  <script>
+    const stateContent = {
+      connect: { title: 'Health Connect verbinden', text: 'Wenn die Voraussetzung fehlt, zeigt die App das offen. Sie erklärt, was fehlt, und bringt dich direkt zur passenden Aktion.' },
+      sync: { title: 'Schritte werden gerade gelesen', text: 'Ein sichtbarer Abgleich läuft. Die App verhindert parallele Abfragen und zeigt danach den neuen Stand.' },
+      empty: { title: 'Noch keine verifizierten Schritte', text: 'Keine Daten heißt nicht automatisch 0. Die App sagt das offen und bietet dir „Erneut versuchen“ an.' },
+      stale: { title: 'Der letzte Stand bleibt sichtbar', text: 'Wenn ein neuer Abgleich gerade nicht klappt, bleibt der letzte verifizierte Wert da. Dazu steht klar dabei, dass er nicht aktuell ist.' }
+    };
+    const detail = document.querySelector('#state-detail');
+    document.querySelectorAll('[data-state]').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-state]').forEach((item) => {
+          item.classList.toggle('active', item === button);
+          item.setAttribute('aria-selected', item === button ? 'true' : 'false');
+        });
+        const content = stateContent[button.dataset.state];
+        detail.querySelector('h3').textContent = content.title;
+        detail.querySelector('p').textContent = content.text;
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  </script>
+</body>
+</html>
